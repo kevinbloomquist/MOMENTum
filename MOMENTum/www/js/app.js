@@ -1,105 +1,85 @@
-// Ionic template App
+// Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'SimpleRESTIonic' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('SimpleRESTIonic', ['ionic', 'backand', 'SimpleRESTIonic.controllers', 'SimpleRESTIonic.services'])
+// 'starter.services' is found in services.js
+// 'starter.controllers' is found in controllers.js
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-    /*   .run(function (, Backand) {
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
 
-     })
-     */
-    .config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-        // change here to your appName
-        BackandProvider.setAppName('ionicstarter');
+    }
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleDefault();
+    }
+  });
+})
 
-        BackandProvider.setSignUpToken('a5fe6d23-711e-49e6-bcc6-0771b7228c5e');
+.config(function($stateProvider, $urlRouterProvider) {
 
-        // token is for anonymous login. see http://docs.backand.com/en/latest/apidocs/security/index.html#anonymous-access
-        BackandProvider.setAnonymousToken('136b0299-5dbe-44a0-8ef7-448231f9cedb');
+  // Ionic uses AngularUI Router which uses the concept of states
+  // Learn more here: https://github.com/angular-ui/ui-router
+  // Set up the various states which the app can be in.
+  // Each state's controller can be found in controllers.js
+  $stateProvider
 
-        $stateProvider
-            // setup an abstract state for the tabs directive
-            .state('tab', {
-                url: '/tabs',
-                abstract: true,
-                templateUrl: 'templates/tabs.html'
-            })
-            .state('tab.dashboard', {
-                url: '/dashboard',
-                views: {
-                    'tab-dashboard': {
-                        templateUrl: 'templates/tab-dashboard.html',
-                        controller: 'DashboardCtrl as vm'
-                    }
-                }
-            })
-            .state('tab.login', {
-                url: '/login',
-                views: {
-                    'tab-login': {
-                        templateUrl: 'templates/tab-login.html',
-                        controller: 'LoginCtrl as login'
-                    }
-                }
-            })
-            .state('tab.signup', {
-                url: '/signup',
-                views: {
-                    'tab-signup': {
-                        templateUrl: 'templates/tab-signup.html',
-                        controller: 'SignUpCtrl as vm'
-                    }
-                }
-            }
-        );
+  // setup an abstract state for the tabs directive
+    .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+  })
 
-        $urlRouterProvider.otherwise('/tabs/dashboard');
-        $httpProvider.interceptors.push('APIInterceptor');
+  // Each tab has its own nav history stack:
+
+  .state('tab.dash', {
+    url: '/dash',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/tab-dash.html',
+        controller: 'DashCtrl'
+      }
+    }
+  })
+
+  .state('tab.chats', {
+      url: '/chats',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/tab-chats.html',
+          controller: 'ChatsCtrl'
+        }
+      }
+    })
+    .state('tab.chat-detail', {
+      url: '/chats/:chatId',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/chat-detail.html',
+          controller: 'ChatDetailCtrl'
+        }
+      }
     })
 
-    .run(function ($ionicPlatform, $rootScope, $state, LoginService, Backand) {
+  .state('tab.account', {
+    url: '/account',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
+      }
+    }
+  });
 
-        $ionicPlatform.ready(function () {
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/tab/dash');
 
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                cordova.plugins.Keyboard.disableScroll(true);
-            }
-
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleLightContent();
-            }
-
-
-            var isMobile = !(ionic.Platform.platforms[0] == "browser");
-            Backand.setIsMobile(isMobile);
-            Backand.setRunSignupAfterErrorInSigninSocial(true);
-        });
-
-        function unauthorized() {
-            console.log("user is unauthorized, sending to login");
-            $state.go('tab.login');
-        }
-
-        function signout() {
-            LoginService.signout();
-        }
-
-        $rootScope.$on('unauthorized', function () {
-            unauthorized();
-        });
-
-        $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-            if (toState.name == 'tab.login') {
-                signout();
-            }
-            else if (toState.name != 'tab.login' && Backand.getToken() === undefined) {
-                unauthorized();
-            }
-        });
-
-    })
+});
