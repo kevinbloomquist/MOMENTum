@@ -5,6 +5,7 @@ www.kevinbloomquist.io
 
 ##Links
 Heroku: Coming soon...
+Trello: https://trello.com/b/xY4wxevy/momentum
 
 ##Overview
 With this project I hoped to move the core idea of LOOPr forward toward it's intended mobile space while taking some first steps into mobile development. 
