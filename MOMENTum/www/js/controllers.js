@@ -202,3 +202,39 @@ angular.module('SimpleRESTIonic.controllers', [])
 
     });
 
+module.controller('GeoCtrl', function($cordovaGeolocation) {
+
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      var lat  = position.coords.latitude;
+      var long = position.coords.longitude;
+      console.log(position);
+      console.log("lat:" + lat, "long:" + long);
+    }, function(err) {
+      console.log(err);
+    });
+
+
+  var watchOptions = {
+    timeout : 3000,
+    enableHighAccuracy: false // may cause errors if true
+  };
+
+  var watch = $cordovaGeolocation.watchPosition(watchOptions);
+  watch.then(
+    null,
+    function(err) {
+      console.log(err);
+    },
+    function(position) {
+      var lat  = position.coords.latitude;
+      var long = position.coords.longitude;
+      console.log(position);
+  });
+
+
+  watch.clearWatch();
+});
+
