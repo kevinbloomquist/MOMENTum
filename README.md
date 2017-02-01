@@ -34,10 +34,10 @@ testing
 
 
 ###Next steps
-Break through blockers on testing environment
-Chisel out geotag and photo data
-Expand Item model for photo, Geo, and fuse
-Pass photo/ geo info
+Break through blockers on testing environment  
+Chisel out geotag and photo data  
+Expand Item model for photo, Geo, and fuse  
+Pass photo/ geo info  
 Write time and Geo fuse/trigger functionality.
 
 
