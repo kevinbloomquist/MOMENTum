@@ -4,7 +4,7 @@ www.kevinbloomquist.io
 
 
 ##Links
-Heroku: Coming soon...
+Heroku: Coming soon...  
 Trello: https://trello.com/b/xY4wxevy/momentum
 
 ##Overview
